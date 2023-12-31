@@ -15,12 +15,14 @@ axiosClient.interceptors.response.use(
         return response;
     },
     (error) => {
-        const { response } = error;
-        if (response.status == 401) {
-            localStorage.removeItem("ACCESS_TOKEN");
-            window.location.href = "/login";
+        try {
+            const { response } = error;
+            if (response.status == 401) {
+                localStorage.removeItem("ACCESS_TOKEN");
+            }
+        } catch (error) {
+            console.log(error);
         }
-        throw error;
     }
 );
 

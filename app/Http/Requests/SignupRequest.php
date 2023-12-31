@@ -29,7 +29,10 @@ class SignupRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'password' => [
                 'required',
-                Password::min(8)->letters()->symbols()
+                'min:8',      // Minimum length of 8 characters
+                'regex:/[a-zA-Z]/',   // At least one letter
+                'regex:/[0-9]/',       // At least one digit
+                'regex:/[!@#$%^&*(),.?":{}|<>]/',  // At least one symbol
             ],
         ];
     }
