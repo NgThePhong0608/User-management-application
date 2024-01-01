@@ -16,7 +16,6 @@ export default function Login() {
             email: emailRef.current.value,
             password: passwordRef.current.value,
         };
-        setErrors(null);
         axiosClient
             .post("/login", payload)
             .then(({ data }) => {

@@ -14,7 +14,6 @@ export default function Signup() {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        setErrors(null);
         const payload = {
             name: nameRef.current.value,
             email: emailRef.current.value,
@@ -31,7 +30,6 @@ export default function Signup() {
             .catch((err) => {
                 const response = err.response;
                 if (response && response.status === 422) {
-                    console.log(response.data.errors);
                     setErrors(response.data.errors);
                 }
             });
