@@ -13,23 +13,30 @@ class AuthController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        $credentials = $request->validated();
+        try {
+            $credentials = $request->validated();
 
-        if (!Auth::attempt($credentials)) {
+            if (!Auth::attempt($credentials)) {
+                return response([
+                    'message' => 'Provided email address or password is incorrect'
+                ], 422);
+            }
+
+            /** @var User $user */
+            $user = Auth::user();
+            $token = $user->createToken('main')->plainTextToken;
+
             return response([
-                'message' => 'Provided email address or password is incorrect'
+                'user' => $user,
+                'token' => $token
             ]);
+        } catch (\Exception $e) {
+            return response([
+                'message' => 'An error occurred during login'
+            ], 500);
         }
-
-        /** @var User $user */
-        $user = Auth::user();
-        $token = $user->createToken('main')->plainTextToken;
-
-        return response([
-            'user' => $user,
-            'token' => $token
-        ]);
     }
+
 
 
     public function signup(SignupRequest $request)

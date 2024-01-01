@@ -14,6 +14,7 @@ export default function Signup() {
 
     const onSubmit = (event) => {
         event.preventDefault();
+        setErrors(null);
         const payload = {
             name: nameRef.current.value,
             email: emailRef.current.value,
